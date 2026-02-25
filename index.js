@@ -1,96 +1,116 @@
 const axios = require('axios');
 const fs = require('fs');
 
-const TAVILY_KEY = process.env.TAVILY_API_KEY ? process.env.TAVILY_API_KEY.trim() : null;
-const OR_KEY = process.env.OPENROUTER_API_KEY ? process.env.OPENROUTER_API_KEY.trim() : null;
+const KEYS = {
+    TAVILY: process.env.TAVILY_API_KEY?.trim(),
+    OR: process.env.OPENROUTER_API_KEY?.trim()
+};
 
 async function main() {
     try {
-        console.log("🔍 正在抓取新闻...");
-        const searchRes = await axios.post('https://api.tavily.com/search', {
-            api_key: TAVILY_KEY,
-            query: "AI technology breakthroughs and news February 2026",
-            max_results: 5
-        });
-        const newsData = searchRes.data.results;
-        console.log(`✅ 抓取成功！数据量: ${JSON.stringify(newsData).length} 字节`);
+        if (!KEYS.TAVILY || !KEYS.OR) throw new Error("Missing API Keys");
 
-        console.log("🤖 正在尝试不同的 AI 路径...");
+        console.log("📡 正在检索 BigTech (Tesla, NVIDIA, Apple, Google) 最新动态...");
         
-        // 重新编排的“高可用”模型列表
-        const models = [
-            "google/gemini-2.0-flash-001",           // 2.0 最新版，通常很稳
-            "google/gemini-flash-1.5",               // 1.5 标准版
-            "deepseek/deepseek-chat",                // DeepSeek 备选
-            "meta-llama/llama-3.1-8b-instruct:free"  // Llama 3.1 免费版
-        ];
+        // 扩展搜索关键词，覆盖你指定的大厂
+        const searchRes = await axios.post('https://api.tavily.com/search', {
+            api_key: KEYS.TAVILY,
+            query: "latest news today on Tesla, NVIDIA, Apple, Google, and AI breakthroughs 2026",
+            search_depth: "advanced",
+            max_results: 8
+        });
 
-        let summary = "";
-        for (const model of models) {
-            try {
-                console.log(`正在请求模型 [${model}]...`);
-                const aiRes = await axios({
-                    method: 'post',
-                    url: 'https://openrouter.ai/api/v1/chat/completions',
-                    headers: {
-                        'Authorization': `Bearer ${OR_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        model: model,
-                        messages: [{
-                            role: "user",
-                            content: `你是一个专业的科技主编。请根据以下原始新闻素材，撰写一份中文网页简报。
-                            素材：${JSON.stringify(newsData)}
-                            要求：
-                            1. 用 HTML 格式书写，使用 <h3> 标签做标题，<p> 标签做正文。
-                            2. 语气要有科技感。
-                            3. 包含原文链接。
-                            4. 直接给 HTML 内容，不要包含 markdown 代码块。`
-                        }]
-                    },
-                    timeout: 45000 // 给 AI 45秒思考时间
-                });
+        console.log("🧠 AI 正在打磨科技深报...");
+        const aiRes = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
+            model: "google/gemini-2.0-flash-001",
+            messages: [{
+                role: "user",
+                content: `你是一个高端科技杂志主编。请根据以下素材写一份中文深度简报。
+                素材：${JSON.stringify(searchRes.data.results)}
+                要求：
+                1. 必须涵盖特斯拉、英伟达、苹果、谷歌等巨头的最新动向。
+                2. 使用 HTML 结构：每条新闻用 <div class="card"> 包装，标题用 <h3>，正文用 <p>，链接用 <a>。
+                3. 语气要客观、犀利、有前瞻性。
+                4. 不要包含任何 markdown 代码块符号。`
+            }]
+        }, {
+            headers: { Authorization: `Bearer ${KEYS.OR}` },
+            timeout: 40000 
+        });
 
-                summary = aiRes.data.choices[0].message.content;
-                if (summary) {
-                    console.log(`✨ 成功！由模型 ${model} 生成。`);
-                    break;
-                }
-            } catch (err) {
-                const status = err.response ? err.response.status : '网络超时';
-                console.warn(`❌ 模型 ${model} 失败 (状态码: ${status})`);
-                // 停顿 2 秒再试，防止触发 429 频率限制
-                await new Promise(resolve => setTimeout(resolve, 2000));
-            }
-        }
+        const content = aiRes.data.choices[0].message.content.replace(/```html|```/g, '').trim();
 
-        if (!summary) throw new Error("所有 AI 模型都暂时无法访问，请检查 OpenRouter 额度或稍后再试。");
-
-        const cleanContent = summary.replace(/```html/g, '').replace(/```/g, '').trim();
-        const htmlContent = `
+        // 这里的 HTML 加入了精心设计的 CSS 样式
+        const html = `
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>AIClaw 每日科技</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIClaw | 巨头情报局</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+            --text: #f1f5f9;
+        }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { 
+            text-align: center; 
+            padding: 40px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        h1 { font-size: 2.5rem; margin: 0; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .meta { color: var(--accent); font-size: 0.9rem; margin-top: 10px; }
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(10px);
+            padding: 25px; 
+            border-radius: 16px; 
+            margin-bottom: 20px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        h3 { margin-top: 0; color: var(--accent); font-size: 1.4rem; }
+        p { color: #cbd5e1; font-size: 1.05rem; }
+        a { color: var(--accent); text-decoration: none; font-size: 0.9rem; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 10px; transition: 0.3s; }
+        a:hover { background: var(--accent); color: var(--bg); }
+        footer { text-align: center; padding: 40px; color: #64748b; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
-    <h1>🚀 AIClaw 科技每日速报</h1>
-    <small>更新于：${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}</small>
-    <hr>
-    <div>${cleanContent}</div>
-    <p style="text-align:center; color:gray; margin-top:50px;">© 2026 AIClaw Agent</p>
+    <div class="container">
+        <header>
+            <h1>AIClaw Intelligence</h1>
+            <div class="meta">巨头情报局 · 实时扫描中</div>
+            <div style="font-size: 0.8rem; color: #64748b; margin-top: 5px;">Update: ${new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'})}</div>
+        </header>
+        <main>${content}</main>
+        <footer>
+            <p>© 2026 AIClaw Agent | Powered by Gemini 2.0 & Tavily</p>
+        </footer>
+    </div>
 </body>
 </html>`;
 
-        fs.writeFileSync('index.html', htmlContent);
-        console.log("🎉 任务圆满完成！");
+        fs.writeFileSync('index.html', html);
+        console.log("🚀 深度美化版网页已生成！");
 
     } catch (error) {
-        console.error("❌ 致命错误:", error.message);
+        console.error("💥 Error:", error.message);
         process.exit(1);
     }
 }
+
 main();
