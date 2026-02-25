@@ -45,7 +45,7 @@ async function main() {
         if (!TAVILY_KEY || !GEMINI_KEY) {
             throw new Error("缺少 API Key，请检查 GitHub Secrets 配置！");
         }
-
+        console.log("检测到 Key 长度为:", GEMINI_KEY ? GEMINI_KEY.length : 0);
         const rawNews = await fetchNews();
         const aiSummary = await summarizeNews(rawNews);
 
