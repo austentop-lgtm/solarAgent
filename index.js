@@ -12,12 +12,16 @@ async function main() {
 
         console.log("🔍 Scanning CNN, BBC, and BigTech market moves...");
         
-        const searchRes = await axios.post('https://api.tavily.com/search', {
-            api_key: KEYS.TAVILY,
-            query: "latest top stories from CNN, BBC news; and market updates on Tesla, NVDA, Apple, Google, Tencent, Xiaomi, CATL, CNOOC, HSBC 2026",
-            search_depth: "advanced",
-            max_results: 20
-        });
+    const searchRes = await axios.post('https://api.tavily.com/search', {
+    api_key: KEYS.TAVILY,
+    query: "latest solar energy, incentive plans for PV，Installer，PV technology, perovskite, LONGi, Jinko Solar, First Solar news 2026",
+    search_depth: "advanced",
+    max_results: 20
+});
+
+// AI 提示词里的分类也改一下：
+// 找到 prompt 里的这句：
+// Categorize into 3 sections: [Technology], [Market], [Policy].
 
         console.log(`✅ ${searchRes.data.results.length} headlines captured. AI Categorizing...`);
 
