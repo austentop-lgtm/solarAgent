@@ -1,28 +1,36 @@
 name: AI News Auto Update
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天北京时间早上 8 点
-  workflow_dispatch: # 允许我们点按钮手动测试
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   run-agent:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      
-      - run: pnpm install
-      - run: pnpm run start # 这是运行你 AI 脚本的命令
-      
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false # 暂时不自动安装，我们后面手动装
+
+      - name: Install Dependencies
+        run: pnpm install # 这一步会根据 package.json 安装 axios
+
+      - name: Run AI Agent
+        run: node index.js # 运行你的抓取脚本
+
       - name: Commit and Push
         run: |
-          git config --global user.name "AI-Agent"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Update Daily AI News" || exit 0
+          git commit -m "chore: update daily news" || exit 0
           git push
