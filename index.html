@@ -4,106 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YLH Daily Updated | 巨头情报局</title>
+    <title>YLH daily news | 20条全球精选</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent: #38bdf8;
-            --text: #f1f5f9;
-        }
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-        .container { max-width: 800px; margin: 0 auto; }
-        header { 
-            text-align: center; 
-            padding: 40px 0; 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 30px;
-        }
-        h1 { font-size: 2.5rem; margin: 0; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .meta { color: var(--accent); font-size: 0.9rem; margin-top: 10px; }
-        .card { 
-            background: var(--card-bg); 
-            backdrop-filter: blur(10px);
-            padding: 25px; 
-            border-radius: 16px; 
-            margin-bottom: 20px; 
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease;
-        }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        h3 { margin-top: 0; color: var(--accent); font-size: 1.4rem; }
-        p { color: #cbd5e1; font-size: 1.05rem; }
-        a { color: var(--accent); text-decoration: none; font-size: 0.9rem; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 10px; transition: 0.3s; }
-        a:hover { background: var(--accent); color: var(--bg); }
-        footer { text-align: center; padding: 40px; color: #64748b; font-size: 0.8rem; }
+        :root { --bg: #0b0f19; --text: #e5e7eb; --accent: #10b981; --border: rgba(255,255,255,0.1); }
+        body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        .wrapper { max-width: 850px; margin: 0 auto; }
+        header { padding: 30px 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+        h1 { font-size: 1.8rem; margin: 0; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .live-dot { height: 10px; width: 10px; background: #ef4444; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .timestamp { color: #6b7280; font-size: 0.85rem; margin-top: 8px; }
+        .news-item { background: #161b2a; padding: 20px; border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border); transition: 0.2s; }
+        .news-item:hover { border-color: var(--accent); }
+        h3 { margin: 0 0 10px 0; font-size: 1.2rem; color: var(--accent); }
+        p { color: #9ca3af; font-size: 0.95rem; margin-bottom: 15px; }
+        a { color: #fff; text-decoration: none; font-size: 0.8rem; background: #1f2937; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); }
+        a:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+        footer { text-align: center; color: #4b5563; font-size: 0.8rem; padding: 40px 0; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="wrapper">
         <header>
-            <h1>YLH daily AI news</h1>
-            <div class="meta">巨头情报局 · 实时扫描中</div>
-            <div style="font-size: 0.8rem; color: #64748b; margin-top: 5px;">Update: 2026/2/25 15:07:56</div>
+            <h1><span class="live-dot"></span> AIClaw Alpha 财经简报</h1>
+            <div class="timestamp">监控范围：全球 Tech & 亚太权重 | 更新于：2026/2/25 15:18:11</div>
         </header>
         <main><!DOCTYPE html>
 <html>
 <head>
-<title>AI前沿观察：2026年初深度简报</title>
+<title>财经简报（2026年2月25日）</title>
 <style>
-.card {
-    border: 1px solid #ccc;
+.news-item {
+    border: 1px solid #eee;
     margin-bottom: 10px;
     padding: 10px;
+    background-color: #f9f9f9;
+}
+.news-item h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+}
+.news-item a {
+    color: blue;
+    text-decoration: none;
 }
 </style>
 </head>
 <body>
-<h1>AI前沿观察：2026年初深度简报</h1>
-<p>本期简报聚焦2026年初人工智能领域的重要进展，重点关注NVIDIA、Tesla等科技巨头的战略布局，以及AI技术发展带来的市场影响。</p>
 
-<div class="card">
-<h3>NVIDIA 发布 Rubin 平台：剑指万亿参数模型</h3>
-<p>NVIDIA 在 CES 2026 上正式发布代号“Vera Rubin”的最新AI平台，采用 H300 GPU 和定制 AI 芯片设计，专为应对万亿参数模型的庞大数据处理需求。 Rubin 平台的推出，预示着 NVIDIA 进一步巩固其在 AI 硬件领域的领先地位，并为下一代主权AI和企业AI基础设施提供关键支持。</p>
-<p>相关链接：<a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Crescendo.ai</a>，<a href="https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer" target="_blank">NVIDIA News</a></p>
+<h1>财经简报（2026年2月25日）</h1>
+
+<h2>重点公司</h2>
+
+<div class="news-item">
+    <h3>英伟达(NVDA)：季度业绩发布在即，或影响市场走向</h3>
+    <p>英伟达(NVDA)将于2月25日发布四季度及全年财报。市场对英伟达财报高度关注，普遍认为财报及其管理层对数据中心需求的评论将大幅影响市场情绪，尤其是半导体和科技板块。分析师指出，英伟达在人工智能领域占据核心地位，业绩表现及相关信息将对标普500指数产生重要影响。摩根士丹利也调整了对英伟达的股票预测。市场对AI Disruptions的担忧有所缓解, 软件股引领涨势，也反映了市场对英伟达财报的积极预期。</p>
+    <a href="https://www.fool.com/investing/2026/02/26/why-feb-26-could-be-huge-day-for-the-stock-market/" target="_blank">原文链接1</a> |
+    <a href="https://www.theglobeandmail.com/investing/markets/stocks/INTC/pressreleases/354339/feb-25-will-be-a-huge-day-for-nvidia-3-important-things-to-watch-for-in-the-companys-upcoming-earnings/" target="_blank">原文链接2</a> |
+    <a href="https://www.usnews.com/news/us/articles/2026-02-25/nvidia-prepares-to-release-its-quarterly-results-as-ai-fears-weigh-on-the-stock-market" target="_blank">原文链接3</a> |
+    <a href="https://finance.yahoo.com/news/morgan-stanley-resets-nvidia-stock-050300058.html" target="_blank">原文链接4</a> |
+    <a href="https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-jump-as-software-leads-ai-relief-rally-ahead-of-nvidia-earnings-210010666.html" target="_blank">原文链接5</a>
 </div>
 
-<div class="card">
-<h3>NVIDIA 联手 Alpamayo 加速自动驾驶开发，挑战 Tesla 视觉方案</h3>
-<p>NVIDIA 与 AI 仿真公司 Alpamayo 达成战略合作，利用 NVIDIA DRIVE Orin 和 Thor 平台，结合 Alpamayo 的高保真数字孪生技术，构建超逼真的测试环境。此举旨在降低自动驾驶汽车的研发成本和时间，同时提升算法在极端情况下的安全性，无疑是 NVIDIA 在自动驾驶领域挑战 Tesla 的有力举措。 与此同时，关于NVIDIA联手Groq引发了外界对服务器芯片未来发展方向的思考。这场合作是行业内技术整合的自然选择，还是NVIDIA意图构建垄断地位的前兆？</p>
-<p>相关链接：<a href="https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer" target="_blank">NVIDIA News</a></p>
+<div class="news-item">
+    <h3>特斯拉(TSLA)：计划大力投资xAI</h3>
+    <p>特斯拉(TSLA)计划向xAI投资约20亿美元。自4月22日发布一季度财报以来，特斯拉股价已上涨约44%，但今年以来仍下跌15%。</p>
+     <a href="https://www.youtube.com/watch?v=ccpgvPycKDQ" target="_blank">原文链接1</a> |
+     <a href="https://www.barrons.com/articles/stock-market-movers-ddfdb74c?gaa_at=eafs&gaa_n=AWEtsqfqA60wxXedeYpkWePc1wWTV-XUSnqRTgA0MtZ61nj61aOIuHIZNLT7&gaa_ts=699ea5aa&gaa_sig=JYiqUTTBBGxwgsmRzpZu-2YyIEsu3NEF7_2QcvH8W3xTqTpEN5MkZ4HB3J2Yi5W6ftOuQoiZczJtu8AqSrZIZw%3D%3D" target="_blank">原文链接2</a>
 </div>
 
-<div class="card">
-<h3>Tesla 坚守纯视觉路线，与 NVIDIA 技术路径分庭抗礼</h3>
-<p>Tesla 依然坚持其纯视觉自动驾驶方案，2026款 Model Y 等 AI4 驱动车型配备九个高分辨率摄像头，并升级为 500 万像素的 Sony IMX 传感器。 Tesla 认为，通过专注于摄像头，可以避免融合多种传感器数据带来的计算负担，从而实现低延迟的视觉数据处理。 Tesla 与 NVIDIA 在自动驾驶技术上的差异化竞争，反映了行业内两条不同的发展路径：数据驱动的端到端模型优化，以及基于推理的开放式 AI 赋能。</p>
-<p>相关链接：<a href="https://etcjournal.com/2026/01/07/clash-of-self-driving-technologies-tesla-vs-nvidia-january-2026/" target="_blank">ETC Journal</a></p>
+<div class="news-item">
+    <h3>苹果(AAPL)：第一季度业绩报告</h3>
+    <p>苹果公布了第一季度业绩报告，具体信息请查阅相关公告和投资者关系网站。相关文件包含了风险因素和管理层对财务状况的讨论与分析。</p>
+    <a href="https://www.apple.com/newsroom/2026/01/apple-reports-first-quarter-results/" target="_blank">原文链接1</a> |
+    <a href="https://www.apple.com/investor/earnings-call/" target="_blank">原文链接2</a>
 </div>
 
-<div class="card">
-<h3>AI 股票市场波动加剧，科技股面临再平衡？</h3>
-<p>2026年初，AI 概念股的波动性显著增加，市场对 AI 技术颠覆产业的担忧引发了一轮资金从科技板块向能源、原材料等传统板块的轮动。尽管许多去年表现优异的 AI 股票出现回调，但市场中依然存在亮点和潜在投资机会。 值得关注的是，Microsoft 在 AI 领域的投资策略似乎正在进行调整，Anthropic 的合作能否给 Microsoft 带来新的增长动力，值得进一步观察。</p>
-<p>相关链接：<a href="https://www.investors.com/news/technology/ai-stocks-artificial-intelligence-stocks-2026-disruption-openclaw-feb17/" target="_blank">Investors.com</a></p>
+<div class="news-item">
+    <h3>汇丰(HSBC): 股价信息</h3>
+    <p>汇丰(HSBC)在伦敦、香港和纽约的股价信息已更新。伦敦GBp (HSBA)为1291.40，香港HKD (0005)为140.30（上涨），纽约USD (HSBC)为87.88（上涨）。</p>
+    <a href="https://www.hsbc.com/investors/results-and-announcements" target="_blank">原文链接</a>
 </div>
 
-<div class="card">
-<h3>Google 押注印度市场，构筑全球 AI 基础设施</h3>
-<p>Google 宣布将在印度投资 150 亿美元，建设 AI 基础设施，并启动“美洲-印度连接”计划，旨在提升美国、印度及南半球之间的数字连接可靠性。结合此前在太平洋、非洲等地的海底光缆建设，Google 正积极构筑其全球 AI 网络，以确保全球用户都能平等地享受 AI 技术带来的便利。</p>
-<p>相关链接：<a href="https://blog.google/intl/en-in/company-news/ai-impact-summit-2026-how-were-partnering-to-make-ai-work-for-everyone/" target="_blank">Google Blog</a></p>
+<div class="news-item">
+    <h3>其他关键信息</h3>
+    <p>关注美国经济数据，里士满和堪萨斯城联储主席将发表讲话。</p>
+    <a href="https://www.reddit.com/r/technicalanalysis/comments/1re16z3/spy_spx_marketmoving_headlines_wednesday_february/" target="_blank">原文链接</a>
 </div>
 
 </body>
 </html></main>
-        <footer>
-            <p>© 2026 AIClaw Agent | Powered by Gemini 2.0 & Tavily</p>
-        </footer>
+        <footer>© 2026 AIClaw Intelligence | Data Source: Tavily Advanced Search</footer>
     </div>
 </body>
 </html>
